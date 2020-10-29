@@ -111,6 +111,8 @@ popd
 %doc CHANGELOG.md CONTRIBUTING.md README.md
 %{_libdir}/libmfx.so.%{mfx_abi}
 %{_libdir}/libmfx.so.%{mfx_version}
+%{_libdir}/libmfx-tracer.so.%{mfx_abi}
+%{_libdir}/libmfx-tracer.so.%{mfx_version}
 %{_libdir}/libmfxhw64.so.%{mfx_abi}
 %{_libdir}/libmfxhw64.so.%{mfx_version}
 %{_libdir}/mfx/libmfx_*_hw64.so
@@ -119,6 +121,7 @@ popd
 %files devel
 %{_includedir}/mfx
 %{_libdir}/libmfx.so
+%{_libdir}/libmfx-tracer.so
 %{_libdir}/libmfxhw64.so
 %{_libdir}/pkgconfig/libmfx.pc
 %{_libdir}/pkgconfig/libmfxhw64.pc
