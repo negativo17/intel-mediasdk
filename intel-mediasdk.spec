@@ -1,8 +1,9 @@
 %global mfx_abi 1
-%global mfx_version %{mfx_abi}.32
+%global mfx_version %{mfx_abi}.34
 
 Name:       intel-mediasdk
-Version:    20.1.1
+Epoch:      1
+Version:    20.3.1
 Release:    1%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
@@ -48,7 +49,7 @@ Color Conversion, Deinterlace, Denoise, Resize, Rotate, Composition
 Summary:    SDK for hardware-accelerated video processing on Intel integrated GPUs
 Provides:   libmfx-devel = %{mfx_version}
 Provides:   libmfx%{_isa}-devel = %{mfx_version}
-Requires:   %{name}%{_isa} = %{version}-%{release}
+Requires:   %{name}%{_isa} = %{epoch}:%{version}-%{release}
 
 %description devel
 Intel Media SDK provides a plain C API to access hardware-accelerated video
@@ -114,6 +115,9 @@ popd
 %{_libdir}/pkgconfig/mfx.pc
 
 %changelog
+* Thu Oct 29 2020 Simone Caronni <negativo17@gmail.com> - 1:20.3.1-1
+- Update to 20.3.1.
+
 * Fri May 15 2020 Simone Caronni <negativo17@gmail.com> - 20.1.1-1
 - Update to 20.1.1.
 - Allow building on CentOS/RHEL 7.
