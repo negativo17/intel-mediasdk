@@ -4,7 +4,7 @@
 
 Name:       intel-mediasdk
 Epoch:      1
-Version:    20.3.1
+Version:    21.1.1
 Release:    1%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
@@ -13,8 +13,6 @@ License:    MIT
 ExclusiveArch: x86_64
 
 Source0:    https://github.com/Intel-Media-SDK/MediaSDK/archive/%{name}-%{version}.tar.gz
-# don't require Intel ICD at build time
-Patch0:     %{name}-no-icd.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gmock-devel
@@ -134,6 +132,9 @@ popd
 %{_libdir}/libmfx-tracer.so.%{mfx_version}
 
 %changelog
+* Mon Mar 01 2021 Simone Caronni <negativo17@gmail.com> - 1:21.1.1-1
+- Update to 21.1.1.
+
 * Thu Oct 29 2020 Simone Caronni <negativo17@gmail.com> - 1:20.3.1-1
 - Update to 20.3.1.
 
