@@ -1,10 +1,10 @@
 %global __cmake_in_source_build 1
 %global mfx_abi 1
-%global mfx_version %{mfx_abi}.34
+%global mfx_version %{mfx_abi}.35
 
 Name:       intel-mediasdk
 Epoch:      1
-Version:    21.1.1
+Version:    21.1.3
 Release:    1%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
@@ -132,6 +132,9 @@ popd
 %{_libdir}/libmfx-tracer.so.%{mfx_version}
 
 %changelog
+* Mon Apr 05 2021 Simone Caronni <negativo17@gmail.com> - 1:21.1.3-1
+- Update to 21.1.3.
+
 * Mon Mar 01 2021 Simone Caronni <negativo17@gmail.com> - 1:21.1.1-1
 - Update to 21.1.1.
 
