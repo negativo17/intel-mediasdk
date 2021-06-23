@@ -4,7 +4,7 @@
 
 Name:       intel-mediasdk
 Epoch:      1
-Version:    21.1.3
+Version:    21.2.2
 Release:    1%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
@@ -14,7 +14,6 @@ ExclusiveArch: x86_64
 
 Source0:    https://github.com/Intel-Media-SDK/MediaSDK/archive/%{name}-%{version}.tar.gz
 
-BuildRequires:  cmake3
 BuildRequires:  gmock-devel
 BuildRequires:  libdrm-devel
 BuildRequires:  libpciaccess-devel
@@ -23,10 +22,12 @@ BuildRequires:  libX11-devel
 BuildRequires:  ocl-icd-devel
 BuildRequires:  wayland-devel
 
-%if 0%{?rhel} == 7
-BuildRequires:  devtoolset-8-gcc-c++
-%else
+%if 0%{?fedora} || 0%{?rhel} >= 8
+BuildRequires:  cmake
 BuildRequires:  gcc-c++
+%else
+BuildRequires:  cmake3
+BuildRequires:  devtoolset-8-gcc-c++
 %endif
 
 Obsoletes:  libmfx < %{mfx_version}
@@ -73,13 +74,15 @@ questions and issues.
 %autosetup -p1 -n MediaSDK-%{name}-%{version}
 
 %build
-%if 0%{?rhel} == 7
-. /opt/rh/devtoolset-8/enable
-%endif
-
 mkdir build
 pushd build
+
+%if 0%{?fedora} || 0%{?rhel} >= 8
+%cmake \
+%else
+. /opt/rh/devtoolset-8/enable
 %cmake3 \
+%endif
     -DBUILD_DISPATCHER=ON \
     -DBUILD_SAMPLES=OFF \
     -DBUILD_TESTS=ON \
@@ -132,6 +135,9 @@ popd
 %{_libdir}/libmfx-tracer.so.%{mfx_version}
 
 %changelog
+* Wed Jun 23 2021 Simone Caronni <negativo17@gmail.com> - 1:21.2.2-1
+- Update to 21.2.2.
+
 * Mon Apr 05 2021 Simone Caronni <negativo17@gmail.com> - 1:21.1.3-1
 - Update to 21.1.3.
 
