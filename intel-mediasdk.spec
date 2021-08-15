@@ -4,7 +4,7 @@
 
 Name:       intel-mediasdk
 Epoch:      1
-Version:    21.2.2
+Version:    21.3.1
 Release:    1%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
@@ -135,6 +135,9 @@ popd
 %{_libdir}/libmfx-tracer.so.%{mfx_version}
 
 %changelog
+* Sun Aug 15 2021 Simone Caronni <negativo17@gmail.com> - 1:21.3.1-1
+- Update to 21.3.1.
+
 * Wed Jun 23 2021 Simone Caronni <negativo17@gmail.com> - 1:21.2.2-1
 - Update to 21.2.2.
 
