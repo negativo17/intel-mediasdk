@@ -109,7 +109,7 @@ popd
 
 %files
 %license LICENSE
-%doc CHANGELOG.md CONTRIBUTING.md README.md
+%doc CHANGELOG.md CONTRIBUTING.md README.rst
 %{_libdir}/libmfx.so.%{mfx_abi}
 %{_libdir}/libmfx.so.%{mfx_version}
 %{_libdir}/libmfx-tracer.so.%{mfx_abi}
