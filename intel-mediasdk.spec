@@ -1,20 +1,20 @@
-%global __cmake_in_source_build 1
 %global mfx_abi 1
 %global mfx_version %{mfx_abi}.35
+%global __provides_exclude_from ^%{_libdir}/mfx/libmfx_.*\\.so$
 
 Name:       intel-mediasdk
 Epoch:      1
 Version:    22.3.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Hardware-accelerated video processing on Intel integrated GPUs library
 URL:        http://mediasdk.intel.com
 License:    MIT
-
-ExclusiveArch: x86_64
+ExclusiveArch:  x86_64
 
 Source0:    https://github.com/Intel-Media-SDK/MediaSDK/archive/%{name}-%{version}.tar.gz
 
-BuildRequires:  gmock-devel
+BuildRequires:  cmake
+BuildRequires:  gcc-c++
 BuildRequires:  libdrm-devel
 BuildRequires:  libpciaccess-devel
 BuildRequires:  libva-devel
@@ -22,19 +22,9 @@ BuildRequires:  libX11-devel
 BuildRequires:  ocl-icd-devel
 BuildRequires:  wayland-devel
 
-%if 0%{?fedora} || 0%{?rhel} >= 8
-BuildRequires:  cmake
-BuildRequires:  gcc-c++
-%else
-BuildRequires:  cmake3
-BuildRequires:  devtoolset-8-gcc-c++
-%endif
-
 Obsoletes:  libmfx < %{mfx_version}
 Provides:   libmfx = %{mfx_version}
 Provides:   libmfx%{_isa} = %{mfx_version}
-
-%global __provides_exclude_from ^%{_libdir}/mfx/libmfx_.*\\.so$
 
 %description
 Intel Media SDK provides a plain C API to access hardware-accelerated video
@@ -43,7 +33,7 @@ Implementation written in C++ 11 with parts in C-for-Media (CM).
 
 Supported video encoders: HEVC, AVC, MPEG-2, JPEG, VP9 Supported video decoders:
 HEVC, AVC, VP8, VP9, MPEG-2, VC1, JPEG Supported video pre-processing filters:
-Color Conversion, Deinterlace, Denoise, Resize, Rotate, Composition
+Color Conversion, Deinterlace, Denoise, Resize, Rotate, Composition.
 
 %package    devel
 Summary:    SDK for hardware-accelerated video processing on Intel integrated GPUs
@@ -58,7 +48,7 @@ Implementation written in C++ 11 with parts in C-for-Media (CM).
 
 Supported video encoders: HEVC, AVC, MPEG-2, JPEG, VP9 Supported video decoders:
 HEVC, AVC, VP8, VP9, MPEG-2, VC1, JPEG Supported video pre-processing filters:
-Color Conversion, Deinterlace, Denoise, Resize, Rotate, Composition
+Color Conversion, Deinterlace, Denoise, Resize, Rotate, Composition.
 
 %package tracer
 Summary:    Dump the calls of an application to the Intel Media SDK library
@@ -74,15 +64,7 @@ questions and issues.
 %autosetup -p1 -n MediaSDK-%{name}-%{version}
 
 %build
-mkdir build
-pushd build
-
-%if 0%{?fedora} || 0%{?rhel} >= 8
 %cmake \
-%else
-. /opt/rh/devtoolset-8/enable
-%cmake3 \
-%endif
     -DBUILD_DISPATCHER=ON \
     -DBUILD_SAMPLES=OFF \
     -DBUILD_TESTS=ON \
@@ -92,20 +74,15 @@ pushd build
     -DENABLE_X11=ON \
     -DENABLE_X11_DRI3=ON \
     -DMFX_ENABLE_KERNELS=ON \
-    -DUSE_SYSTEM_GTEST=OFF \
-    ..
-%make_build
-popd
+    -DUSE_SYSTEM_GTEST=OFF
+
+%cmake_build
 
 %install
-pushd build
-%make_install
-popd
+%cmake_install
 
 %check
-pushd build
-%make_build test
-popd
+%cmake_build -- test
 
 %files
 %license LICENSE
@@ -135,6 +112,9 @@ popd
 %{_libdir}/libmfx-tracer.so.%{mfx_version}
 
 %changelog
+* Mon Apr 04 2022 Simone Caronni <negativo17@gmail.com> - 1:22.3.0-2
+- Split configuration for epel-8 branch.
+
 * Sat Mar 19 2022 Simone Caronni <negativo17@gmail.com> - 1:22.3.0-1
 - Update to 22.3.0.
 
